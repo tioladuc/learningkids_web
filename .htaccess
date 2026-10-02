@@ -1,0 +1,145 @@
+# ============================================================
+# LearningKids / WebCourse
+#
+# Location:
+# https://api.institutblaina.cm/webcourse/.htaccess
+#
+# Public URL examples:
+#
+# /webcourse/
+# /webcourse/connect
+# /webcourse/connect/password
+# /webcourse/calcul/work
+# /webcourse/calcul/work/sd=wer
+# /webcourse/calcul/work/sd=wer/id=123/type=test
+#
+# All requests are internally routed to:
+# /webcourse/index.php
+# ============================================================
+
+
+RewriteEngine On
+RewriteBase /webcourse/
+
+
+# ============================================================
+# 1. DO NOT REWRITE REAL FILES OR REAL DIRECTORIES
+# ============================================================
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+
+# ============================================================
+# 2. ROOT
+#
+# /webcourse/
+#
+# -> index.php
+# ============================================================
+
+RewriteRule ^$ index.php [L]
+
+
+# ============================================================
+# 3. PAGE + SUBPAGE + 5 KEY=VALUE PARAMETERS
+#
+# /webcourse/{11}/{12}/{1}={2}/{3}={4}/{5}={6}/{7}={8}/{9}={10}/
+#
+# ->
+# index.php?page={11}&subpage={12}
+#            &{1}={2}
+#            &{3}={4}
+#            &{5}={6}
+#            &{7}={8}
+#            &{9}={10}
+# ============================================================
+
+RewriteRule ^([^/]+)/([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/?$ index.php?page=$1&subpage=$2&$3=$4&$5=$6&$7=$8&$9=$10&$11=$12 [L,QSA]
+
+
+# ============================================================
+# 4. PAGE + SUBPAGE + 4 KEY=VALUE PARAMETERS
+#
+# /webcourse/{9}/{10}/{1}={2}/{3}={4}/{5}={6}/{7}={8}/
+#
+# ->
+# index.php?page={9}&subpage={10}
+#            &{1}={2}
+#            &{3}={4}
+#            &{5}={6}
+#            &{7}={8}
+# ============================================================
+
+RewriteRule ^([^/]+)/([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/?$ index.php?page=$1&subpage=$2&$3=$4&$5=$6&$7=$8&$9=$10 [L,QSA]
+
+
+# ============================================================
+# 5. PAGE + SUBPAGE + 3 KEY=VALUE PARAMETERS
+#
+# /webcourse/{7}/{8}/{1}={2}/{3}={4}/{5}={6}/
+#
+# ->
+# index.php?page={7}&subpage={8}
+#            &{1}={2}
+#            &{3}={4}
+#            &{5}={6}
+# ============================================================
+
+RewriteRule ^([^/]+)/([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/?$ index.php?page=$1&subpage=$2&$3=$4&$5=$6&$7=$8 [L,QSA]
+
+
+# ============================================================
+# 6. PAGE + SUBPAGE + 2 KEY=VALUE PARAMETERS
+#
+# /webcourse/{5}/{6}/{1}={2}/{3}={4}/
+#
+# ->
+# index.php?page={5}&subpage={6}
+#            &{1}={2}
+#            &{3}={4}
+# ============================================================
+
+RewriteRule ^([^/]+)/([^/]+)/([^/=]+)=([^/]+)/([^/=]+)=([^/]+)/?$ index.php?page=$1&subpage=$2&$3=$4&$5=$6 [L,QSA]
+
+
+# ============================================================
+# 7. PAGE + SUBPAGE + 1 KEY=VALUE PARAMETER
+#
+# /webcourse/{3}/{4}/{1}={2}/
+#
+# Example:
+# /webcourse/calcul/work/sd=wer
+#
+# ->
+# index.php?page=calcul&subpage=work&sd=wer
+# ============================================================
+
+RewriteRule ^([^/]+)/([^/]+)/([^/=]+)=([^/]+)/?$ index.php?page=$1&subpage=$2&$3=$4 [L,QSA]
+
+
+# ============================================================
+# 8. PAGE + SUBPAGE
+#
+# /webcourse/{1}/{2}
+# /webcourse/{1}/{2}/
+#
+# ->
+# index.php?page={1}&subpage={2}
+# ============================================================
+
+RewriteRule ^([^/]+)/([^/]+)/?$ index.php?page=$1&subpage=$2 [L,QSA]
+
+
+# ============================================================
+# 9. PAGE ONLY
+#
+# /webcourse/{1}
+# /webcourse/{1}/
+#
+# ->
+# index.php?page={1}
+# ============================================================
+
+RewriteRule ^([^/]+)/?$ index.php?page=$1 [L,QSA]

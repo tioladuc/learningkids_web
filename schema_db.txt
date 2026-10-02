@@ -1,0 +1,34 @@
+CREATE TABLE  	learn4kids_basket(
+    id int(11) AUTO_INCREMENT PRIMARY KEY,
+    current_id VARCHAR(50),
+    total_items int(11),
+    total_amount decimal(10,2),
+    is_paid int(1),
+    created_date datetime,
+    payment_date datetime
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE  	learn4kids_basket_item(
+    basket_id int(11),
+    course_code VARCHAR(6),
+    price decimal(10,2),
+    child_id varchar(50),
+    added_date datetime,
+    PRIMARY KEY(basket_id, course_code, child_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE learn4kids_emails(
+    id int(11) PRIMARY KEY AUTO_INCREMENT,
+    createdDate Datetime,
+    sentDate Datetime,
+    is_active int(1),
+    subject varchar(200),
+    sent_to varchar(200),
+    send_from varchar(200),
+    content text
+    parent_id varchar(50)
+)
+
+SELECT *
+FROM 
+
